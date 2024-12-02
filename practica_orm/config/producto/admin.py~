@@ -1,0 +1,25 @@
+from django.contrib import admin
+from .models import Fabrica, Producto
+
+class ProductoInline(admin.TabularInline):  
+    model = Producto
+    extra = 1  
+    fields = ('nombre', 'precio', 'descripcion', 'fecha_vencimiento')  
+
+# Configuración para la vista de Fabrica
+@admin.register(Fabrica)
+class FabricaAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'pais') 
+    search_fields = ('nombre', 'pais')  
+    list_filter = ('pais',) 
+    inlines = [ProductoInline] 
+
+# Configuración para la vista de Producto
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'descripcion','precio','fecha_vencimiento','fabrica') 
+    list_filter = ('fabrica', 'fecha_vencimiento') 
+    search_fields = ('nombre', 'descripcion')
+    ordering = ('fabrica', 'nombre')
+    list_per_page = 5
+

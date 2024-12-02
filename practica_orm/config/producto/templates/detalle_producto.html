@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+<section class="container mt-5">
+  <h2 class="text-center">Información de Productos</h2>
+  <div class="d-flex justify-content-center mt-4">
+    <table class="table table-bordered w-auto text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+      <thead class="table-light">
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Descripción</th>
+          <th>Vencimiento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ producto.nombre }}</td>
+          <td>${{ producto.precio }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.fecha_vencimiento|date:'M. d, Y' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center mt-3">
+    <a href="{% url 'listar_producto' %}" class="btn btn-secondary">Volver a la lista de productos</a>
+  </div>
+</section>
+{% endblock %}
+

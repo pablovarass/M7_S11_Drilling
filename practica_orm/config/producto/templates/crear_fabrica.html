@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+<section class="container mt-5">
+    <h2 class="text-center">Crear Fábrica</h2>
+    <div class="row justify-content-center">
+        <form action="{% url 'crear_fabrica' %}" method="post" class="w-50">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Guardar" class="btn btn-primary w-100">
+        </form>
+    </div>
+</section>
+{% endblock %}
+
