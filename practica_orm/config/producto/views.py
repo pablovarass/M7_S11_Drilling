@@ -9,14 +9,18 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+
 
 
 
 # Create your views here.
+@login_required
 def listar(request):
     productos = Producto.objects.using('default').all()
     return render(request, 'listar_productos.html', {'productos':productos})
 
+@login_required
 def crear(request):
     if request.method == 'POST':
         form = ProductoForm(request.POST)
@@ -31,6 +35,7 @@ def crear(request):
         form = ProductoForm()
         return render(request, 'crear_producto.html', {'producto_form':form}) 
     
+@login_required
 def editar(request, producto_id):
     try:
         producto = Producto.objects.get(id=producto_id)
@@ -51,6 +56,7 @@ def editar(request, producto_id):
 
     return render(request, 'editar_producto.html', {'producto_form': form, 'producto_id': producto_id})
  
+@login_required
 def eliminar_producto(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
     producto.delete()
@@ -61,6 +67,7 @@ def index(request):
     return render(request, 'index.html')
 
 
+@login_required
 def buscar(request):
     if request.method == 'GET':
         query = request.GET.get('query')
@@ -81,6 +88,7 @@ def mostrar_cadena(request, cadena):
         return HttpResponse("El username está vacío o es inválido", status=400)
     return render(request, 'mostrar_cadena.html', {'cadena': cadena})
    
+@login_required
 def detalle_producto(request, producto_id):
     try:
         producto = Producto.objects.get(id=producto_id)
@@ -136,6 +144,7 @@ def iniciar_sesion(request):
 
     return render(request, 'login.html') 
 
+@login_required
 def cerrar_sesion(request):
     logout(request)
     return redirect('index')
